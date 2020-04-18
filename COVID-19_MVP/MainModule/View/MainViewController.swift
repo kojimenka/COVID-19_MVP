@@ -14,7 +14,9 @@ final class MainViewController : UIViewController {
     private var mainView = MainView()
     
     private var tableView = UITableView()
-    private let searchController = UISearchController(searchResultsController: nil)
+    
+    private let searchController  = UISearchController(searchResultsController: nil)
+    private let activityIndicator = UIActivityIndicatorView() // Cool download indicator in view
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -25,15 +27,30 @@ final class MainViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        setupSearchControl()
         setupTableView()
         setConstraints()
+
     }
     
     private func setupView () {
         title = "COVID-19"
-        view.backgroundColor = .backgroundColor
-        navigationController?.navigationBar.tintColor = .systemPink
-        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh,
+                                                            target: self,
+                                                            action: #selector(updateTrigger))
+        DispatchQueue.main.async {
+            self.navigationController?.navigationBar.tintColor = .systemPink
+            self.view.backgroundColor = .backgroundColor
+        }
+    }
+    
+    private func setupTableView () {
+        tableView = mainView.tableView
+        tableView.delegate   = self
+        tableView.dataSource = self
+    }
+    
+    private func setupSearchControl () {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Country"
@@ -41,10 +58,24 @@ final class MainViewController : UIViewController {
         definesPresentationContext = true
     }
     
-    private func setupTableView () {
-        tableView = mainView.tableView
-        tableView.delegate   = self
-        tableView.dataSource = self
+    private func startIndicator () {
+        tableView.alpha = 0.0
+        activityIndicator.center = view.center
+        activityIndicator.style = .medium
+        activityIndicator.color = .systemPink
+        activityIndicator.startAnimating()
+        view.addSubview(activityIndicator)
+    }
+    
+    private func stopDownloadIndicator () {
+        DispatchQueue.main.async {
+            self.activityIndicator.stopAnimating()
+            self.activityIndicator.removeFromSuperview()
+            
+            UIView.animate(withDuration: 0.5) {
+                self.tableView.alpha = 1.0
+            }
+        }
     }
     
     private func setConstraints () {
@@ -57,7 +88,11 @@ final class MainViewController : UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
-
+    
+    @objc private func updateTrigger () {
+        presenter?.updateData()
+    }
+    
 }
 
 extension MainViewController : UITableViewDelegate, UITableViewDataSource {
@@ -96,6 +131,14 @@ extension MainViewController : UISearchResultsUpdating {
 }
 
 extension MainViewController : MainViewProtocol {
+    func showIndicator() {
+        startIndicator()
+    }
+    
+    func stopIndicator() {
+        stopDownloadIndicator()
+    }
+    
     func showFilterData() {
         DispatchQueue.main.async {
             self.tableView.reloadData()

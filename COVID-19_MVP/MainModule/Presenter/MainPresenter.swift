@@ -11,22 +11,27 @@ import Foundation
 protocol MainViewProtocol : class {
     func successDownloadData ()
     func failureDownloadData ()
-    func showFilterData()
+    func showFilterData ()
+    func showIndicator ()
+    func stopIndicator ()
 }
 
 protocol MainViewPresenterProtocol : class {
     init(view : MainViewProtocol, router : MainRouter, model : MainModelProtocol)
-    var allCountriesInfo : [CountryInfo]? { get }
+    
+    var allCountriesInfo          : [CountryInfo]? { get }
     var changedCountriesInfoArray : [CountryInfo]? { get }
     var isSearchBarEmpty : Bool? { get }
     var isFiltering      : Bool? { get }
+    
     func getData()
+    func updateData()
     func presentDetailModule(daysInfo: [DayInfo]?, countryName : String)
     func filterArray (searchText : String)
 }
 
 final class MainViewPresenter : MainViewPresenterProtocol {
-    
+        
     private weak var view   : MainViewProtocol?
     private var router      : MainRouter
     private var model       : MainModelProtocol
@@ -45,6 +50,7 @@ final class MainViewPresenter : MainViewPresenterProtocol {
     }
     
     func getData() {
+        self.view?.showIndicator()
         model.getLastData { [weak self] (result) in
             guard let self = self else { return }
             switch result {
@@ -52,11 +58,18 @@ final class MainViewPresenter : MainViewPresenterProtocol {
                 print(err)
                 self.allCountriesInfo = nil
                 self.view?.failureDownloadData()
+                self.view?.stopIndicator()
             case .success(let data):
                 self.allCountriesInfo = data
                 self.view?.successDownloadData()
+                self.view?.stopIndicator()
             }
         }
+    }
+    
+    func updateData() {
+        UserDefaults.standard.set(nil, forKey: UserDefaultsName.lastUpdate.rawValue)
+        getData()
     }
     
     func presentDetailModule(daysInfo: [DayInfo]?, countryName : String) {
