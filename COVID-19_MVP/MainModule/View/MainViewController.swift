@@ -14,10 +14,12 @@ final class MainViewController : UIViewController {
     private var mainView = MainView()
     
     private var tableView = UITableView()
+    private let searchController = UISearchController(searchResultsController: nil)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemPink]
+        //navigationController?.navigationBar.prefersLargeTitles = true
     }
     
     override func viewDidLoad() {
@@ -29,7 +31,14 @@ final class MainViewController : UIViewController {
     
     private func setupView () {
         title = "COVID-19"
+        view.backgroundColor = .backgroundColor
         navigationController?.navigationBar.tintColor = .systemPink
+        
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Country"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
     }
     
     private func setupTableView () {
@@ -53,26 +62,46 @@ final class MainViewController : UIViewController {
 
 extension MainViewController : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.allCountriesInfo?.count ?? 0
+        return presenter?.isFiltering == true ? presenter?.changedCountriesInfoArray?.count ?? 0 : presenter?.allCountriesInfo?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! MainTableViewCell
-        let currentCoutry = presenter?.allCountriesInfo?[indexPath.row]
-        cell.confirmedLabel.text = "\(currentCoutry?.dayInfo?.allDaysInfo.last?.confirmed ?? 0)"
-        cell.countryLabel.text   = currentCoutry?.country
+        
+        let currentCounry = presenter?.isFiltering == true ? presenter?.changedCountriesInfoArray?[indexPath.row] : presenter?.allCountriesInfo?[indexPath.row]
+        
+        cell.confirmedLabel.text = "\(currentCounry?.dayInfo?.allDaysInfo.last?.confirmed ?? 0)"
+        cell.countryLabel.text   = currentCounry?.country
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let daysInfo    = presenter?.allCountriesInfo?[indexPath.row].dayInfo?.allDaysInfo
-        let countryName = presenter?.allCountriesInfo?[indexPath.row].country ?? ""
+        
+        let currentCounry = presenter?.isFiltering == true ? presenter?.changedCountriesInfoArray?[indexPath.row] : presenter?.allCountriesInfo?[indexPath.row]
+        
+        let daysInfo    = currentCounry?.dayInfo?.allDaysInfo
+        let countryName = currentCounry?.country ?? ""
+        
         presenter?.presentDetailModule(daysInfo: daysInfo, countryName: countryName)
     }
 }
 
+extension MainViewController : UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        presenter?.filterArray(searchText: searchBar.text ?? "")
+    }
+}
+
 extension MainViewController : MainViewProtocol {
+    func showFilterData() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
+    
     func successDownloadData() {
         DispatchQueue.main.async {
             self.tableView.reloadData()

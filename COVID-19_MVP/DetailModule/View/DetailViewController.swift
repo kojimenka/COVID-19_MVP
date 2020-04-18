@@ -18,6 +18,7 @@ final class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.textColor!]
+        navigationItem.largeTitleDisplayMode = .never
     }
     
     override func viewDidLoad() {
@@ -29,6 +30,7 @@ final class DetailViewController: UIViewController {
     
     private func setupView () {
         title = presenter.countryName
+        view.backgroundColor = .backgroundColor
     }
     
     private func setupTableView () {
@@ -64,6 +66,10 @@ extension DetailViewController : UITableViewDataSource, UITableViewDelegate {
         cell.deathLabel.text     = "\(dayInfo?.deaths ?? 0)"
         cell.recoveredLabel.text = "\(dayInfo?.recovered ?? 0)"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 }

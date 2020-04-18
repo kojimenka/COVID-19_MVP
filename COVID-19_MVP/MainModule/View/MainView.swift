@@ -14,6 +14,7 @@ final class MainView {
         let table = UITableView()
         table.translatesAutoresizingMaskIntoConstraints = false
         table.register(MainTableViewCell.self, forCellReuseIdentifier: "MyCell")
+        table.backgroundColor = .backgroundColor
         table.rowHeight = 60
         return table
     }()

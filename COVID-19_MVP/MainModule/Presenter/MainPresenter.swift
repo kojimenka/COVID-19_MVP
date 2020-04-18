@@ -11,13 +11,18 @@ import Foundation
 protocol MainViewProtocol : class {
     func successDownloadData ()
     func failureDownloadData ()
+    func showFilterData()
 }
 
 protocol MainViewPresenterProtocol : class {
     init(view : MainViewProtocol, router : MainRouter, model : MainModelProtocol)
     var allCountriesInfo : [CountryInfo]? { get }
+    var changedCountriesInfoArray : [CountryInfo]? { get }
+    var isSearchBarEmpty : Bool? { get }
+    var isFiltering      : Bool? { get }
     func getData()
     func presentDetailModule(daysInfo: [DayInfo]?, countryName : String)
+    func filterArray (searchText : String)
 }
 
 final class MainViewPresenter : MainViewPresenterProtocol {
@@ -27,6 +32,10 @@ final class MainViewPresenter : MainViewPresenterProtocol {
     private var model       : MainModelProtocol
     
     public var allCountriesInfo: [CountryInfo]?
+    public var changedCountriesInfoArray: [CountryInfo]?
+    
+    var isFiltering      : Bool? = false
+    var isSearchBarEmpty : Bool? = false
     
     init(view: MainViewProtocol, router: MainRouter, model : MainModelProtocol) {
         self.view   = view
@@ -52,6 +61,14 @@ final class MainViewPresenter : MainViewPresenterProtocol {
     
     func presentDetailModule(daysInfo: [DayInfo]?, countryName : String) {
         router.detailController(daysInfo: daysInfo, countryName: countryName)
+    }
+    
+    func filterArray (searchText : String) {
+        isSearchBarEmpty = searchText ==  "" ? true : false
+        isFiltering      = searchText != "" && isSearchBarEmpty == false ? true : false
+        
+        changedCountriesInfoArray = allCountriesInfo?.filter { ($0.country?.lowercased().contains(searchText.lowercased()) ?? false)}
+        self.view?.showFilterData()
     }
     
 }
