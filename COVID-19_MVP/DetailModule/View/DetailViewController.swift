@@ -31,6 +31,9 @@ final class DetailViewController: UIViewController {
     private func setupView () {
         title = presenter.countryName
         view.backgroundColor = .backgroundColor
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
+                                                            target: self,
+                                                            action: #selector(test))
     }
     
     private func setupTableView () {
@@ -49,6 +52,10 @@ final class DetailViewController: UIViewController {
             detailTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    @objc private func test () {
+        
+    }
 
 }
 
@@ -62,7 +69,8 @@ extension DetailViewController : UITableViewDataSource, UITableViewDelegate {
         if section == 0 {
             return 1
         } else {
-            return presenter.daysInfo?.count ?? 0
+            guard let count = presenter.daysInfo?.count else { return 0 }
+            return count - 2
         }
     }
     
@@ -73,11 +81,10 @@ extension DetailViewController : UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! DetailTableCell
-            let dayInfo = presenter.daysInfo?[indexPath.row]
-            cell.confirmedLabel.text = "\(dayInfo?.confirmed ?? 0)"
-            cell.dateLabel.text      = dayInfo?.date
-            cell.deathLabel.text     = "\(dayInfo?.deaths ?? 0)"
-            cell.recoveredLabel.text = "\(dayInfo?.recovered ?? 0)"
+            guard let currentDayInfo = presenter.daysInfo?[indexPath.row] else {fatalError()}
+            guard let previosDayInfo = presenter.daysInfo?[indexPath.row + 1] else {fatalError()}
+            guard let thirdDayInfo   = presenter.daysInfo?[indexPath.row + 2] else {fatalError()}
+            cell.dataForDisplay = (currentDayInfo, previosDayInfo, thirdDayInfo)
             return cell
         }
     }

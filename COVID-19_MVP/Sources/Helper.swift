@@ -24,6 +24,20 @@ enum UserDefaultsName : String {
     case lastUpdate
 }
 
+enum ImageNames : String {
+    case growDown
+    case growUp
+    case confirmed
+    case death
+    case recovered
+}
+
+enum ColorsNames : String{
+    case textColor
+    case darkRedColor
+    case darkGreenColor
+}
+
 extension UIColor {
     static let cellColor       = UIColor(named: "cellColor")
     static let backgroundColor = UIColor(named: "tableBackGroundColor")
