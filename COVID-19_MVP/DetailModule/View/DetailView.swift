@@ -25,7 +25,7 @@ final class DetailView {
         tableView.separatorColor = .gray
         tableView.backgroundColor = .backgroundColor
         tableView.register(DetailTableCell.self, forCellReuseIdentifier: "MyCell")
-        //tableView.register(DetailChartCell.self, forCellReuseIdentifier: "DetailCell")
+        tableView.register(DetailChartCell.self, forCellReuseIdentifier: "DetailCell")
         return tableView
     }()
 

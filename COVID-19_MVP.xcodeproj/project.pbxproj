@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		213424871E313AEAE09B5CA7 /* Pods_COVID_19_MVP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0AE864C4B77572B55CD992 /* Pods_COVID_19_MVP.framework */; };
+		2C277A38244C9855009C9278 /* ChartTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C277A37244C9855009C9278 /* ChartTableCell.swift */; };
 		2C42284F244A257C00D2CAB4 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C42284E244A257C00D2CAB4 /* MainTableViewCell.swift */; };
 		2C422851244A2A3D00D2CAB4 /* NetworkServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C422850244A2A3D00D2CAB4 /* NetworkServices.swift */; };
 		2C422853244A2C5700D2CAB4 /* PersistanceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C422852244A2C5700D2CAB4 /* PersistanceService.swift */; };
@@ -30,6 +32,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D0AE864C4B77572B55CD992 /* Pods_COVID_19_MVP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVID_19_MVP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C277A37244C9855009C9278 /* ChartTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTableCell.swift; sourceTree = "<group>"; };
 		2C42284E244A257C00D2CAB4 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		2C422850244A2A3D00D2CAB4 /* NetworkServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkServices.swift; sourceTree = "<group>"; };
 		2C422852244A2C5700D2CAB4 /* PersistanceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceService.swift; sourceTree = "<group>"; };
@@ -52,6 +56,8 @@
 		2CE23A0E244A384A0059BDFC /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		2CE23A10244A3F780059BDFC /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		2CE23A12244A3FA70059BDFC /* DetailTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTableCell.swift; sourceTree = "<group>"; };
+		31A80C460E2CE5C7A77BEB39 /* Pods-COVID-19_MVP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID-19_MVP.debug.xcconfig"; path = "Target Support Files/Pods-COVID-19_MVP/Pods-COVID-19_MVP.debug.xcconfig"; sourceTree = "<group>"; };
+		7236FB1C6EFC36F00EA02A21 /* Pods-COVID-19_MVP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID-19_MVP.release.xcconfig"; path = "Target Support Files/Pods-COVID-19_MVP/Pods-COVID-19_MVP.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				213424871E313AEAE09B5CA7 /* Pods_COVID_19_MVP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +77,8 @@
 			children = (
 				2C967062244A11840041E4BA /* COVID-19_MVP */,
 				2C967061244A11840041E4BA /* Products */,
+				78D4DAB3EDB6859CC843C3A6 /* Pods */,
+				5D93E19586A58950F7D8C5C9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -202,6 +211,7 @@
 				2CE23A0E244A384A0059BDFC /* DetailViewController.swift */,
 				2CE23A10244A3F780059BDFC /* DetailView.swift */,
 				2CE23A12244A3FA70059BDFC /* DetailTableCell.swift */,
+				2C277A37244C9855009C9278 /* ChartTableCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -213,6 +223,23 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		5D93E19586A58950F7D8C5C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0D0AE864C4B77572B55CD992 /* Pods_COVID_19_MVP.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		78D4DAB3EDB6859CC843C3A6 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				31A80C460E2CE5C7A77BEB39 /* Pods-COVID-19_MVP.debug.xcconfig */,
+				7236FB1C6EFC36F00EA02A21 /* Pods-COVID-19_MVP.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -220,9 +247,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C967077244A11880041E4BA /* Build configuration list for PBXNativeTarget "COVID-19_MVP" */;
 			buildPhases = (
+				59DDEEC821A4100E1630098A /* [CP] Check Pods Manifest.lock */,
 				2C96705C244A11840041E4BA /* Sources */,
 				2C96705D244A11840041E4BA /* Frameworks */,
 				2C96705E244A11840041E4BA /* Resources */,
+				8700400686397CAAAEEC2015 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -279,6 +308,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		59DDEEC821A4100E1630098A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-COVID-19_MVP-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8700400686397CAAAEEC2015 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-COVID-19_MVP/Pods-COVID-19_MVP-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-COVID-19_MVP/Pods-COVID-19_MVP-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-COVID-19_MVP/Pods-COVID-19_MVP-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		2C96705C244A11840041E4BA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -299,6 +370,7 @@
 				2C967064244A11840041E4BA /* AppDelegate.swift in Sources */,
 				2CE23A07244A2F2D0059BDFC /* Helper.swift in Sources */,
 				2CE23A0F244A384A0059BDFC /* DetailViewController.swift in Sources */,
+				2C277A38244C9855009C9278 /* ChartTableCell.swift in Sources */,
 				2C967088244A1A3B0041E4BA /* MainPresenter.swift in Sources */,
 				2C967066244A11840041E4BA /* SceneDelegate.swift in Sources */,
 			);
@@ -442,6 +514,7 @@
 		};
 		2C967078244A11880041E4BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 31A80C460E2CE5C7A77BEB39 /* Pods-COVID-19_MVP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -460,6 +533,7 @@
 		};
 		2C967079244A11880041E4BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7236FB1C6EFC36F00EA02A21 /* Pods-COVID-19_MVP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

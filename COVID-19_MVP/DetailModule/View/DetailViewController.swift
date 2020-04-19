@@ -54,22 +54,44 @@ final class DetailViewController: UIViewController {
 
 
 extension DetailViewController : UITableViewDataSource, UITableViewDelegate {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.daysInfo?.count ?? 0
+        if section == 0 {
+            return 1
+        } else {
+            return presenter.daysInfo?.count ?? 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! DetailTableCell
-        let dayInfo = presenter.daysInfo?[indexPath.row]
-        cell.confirmedLabel.text = "\(dayInfo?.confirmed ?? 0)"
-        cell.dateLabel.text      = dayInfo?.date
-        cell.deathLabel.text     = "\(dayInfo?.deaths ?? 0)"
-        cell.recoveredLabel.text = "\(dayInfo?.recovered ?? 0)"
-        return cell
+        if indexPath.section == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DetailCell") as! DetailChartCell
+            cell.dataForChart = presenter.daysInfo
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MyCell", for: indexPath) as! DetailTableCell
+            let dayInfo = presenter.daysInfo?[indexPath.row]
+            cell.confirmedLabel.text = "\(dayInfo?.confirmed ?? 0)"
+            cell.dateLabel.text      = dayInfo?.date
+            cell.deathLabel.text     = "\(dayInfo?.deaths ?? 0)"
+            cell.recoveredLabel.text = "\(dayInfo?.recovered ?? 0)"
+            return cell
+        }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.section == 0 {
+            return CGFloat(300.0)
+        } else {
+            return CGFloat(120.0)
+        }
     }
     
 }

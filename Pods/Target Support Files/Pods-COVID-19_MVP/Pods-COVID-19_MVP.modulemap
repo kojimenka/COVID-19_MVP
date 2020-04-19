@@ -1,0 +1,6 @@
+framework module Pods_COVID_19_MVP {
+  umbrella header "Pods-COVID-19_MVP-umbrella.h"
+
+  export *
+  module * { export * }
+}
