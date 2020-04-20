@@ -33,7 +33,7 @@ final class DetailViewController: UIViewController {
         view.backgroundColor = .backgroundColor
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .edit,
                                                             target: self,
-                                                            action: #selector(test))
+                                                            action: #selector(showAlertSheet))
     }
     
     private func setupTableView () {
@@ -53,8 +53,29 @@ final class DetailViewController: UIViewController {
         ])
     }
     
-    @objc private func test () {
+    @objc private func showAlertSheet () {
+        let actionSheetController = UIAlertController(title: "Chart Setings", message: "Filter chart", preferredStyle: .actionSheet)
         
+        let firstAction = UIAlertAction(title: "First dead", style: .default) { [weak self] action -> Void in
+            self?.presenter.updateChart(edit: .firstDead)
+        }
+        
+        let secondAction = UIAlertAction(title: "First recoverd", style: .default) { [weak self] action -> Void in
+            self?.presenter.updateChart(edit: .firstRecovered)
+        }
+        
+        let thirdAction = UIAlertAction(title: "First confirmed", style: .default) { [weak self] action -> Void in
+            self?.presenter.updateChart(edit: .firstConfirmed)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        actionSheetController.addAction(firstAction)
+        actionSheetController.addAction(secondAction)
+        actionSheetController.addAction(thirdAction)
+        actionSheetController.addAction(cancelAction)
+    
+        present(actionSheetController, animated: true, completion: nil)
     }
 
 }
@@ -104,5 +125,11 @@ extension DetailViewController : UITableViewDataSource, UITableViewDelegate {
 }
 
 extension DetailViewController : DetailViewProtocol {
+    func showUpdateChart() {
+        DispatchQueue.main.async {
+            self.detailTableView.reloadData()
+        }
+    }
+    
     
 }

@@ -8,20 +8,28 @@
 
 import Foundation
 
+enum EditChart : String {
+    case firstDead
+    case firstRecovered
+    case firstConfirmed
+}
+
 protocol DetailViewProtocol : class {
-    
+    func showUpdateChart()
 }
 
 protocol DetailPresenterProtocol {
     init(view : DetailViewProtocol, router : MainRouter, daysInfo : [DayInfo]?, countryName : String)
     var daysInfo : [DayInfo]? { get }
     var countryName : String  { get }
+    
+    func updateChart (edit : EditChart)
 }
 
 final class DetailViewPresenter : DetailPresenterProtocol {
-    
+        
     private weak var view : DetailViewProtocol?
-    var router       : MainRouter?
+    public var router       : MainRouter?
     
     var daysInfo: [DayInfo]?
     var countryName: String
@@ -33,4 +41,16 @@ final class DetailViewPresenter : DetailPresenterProtocol {
         self.countryName = countryName
     }
     
+    func updateChart(edit: EditChart) {
+        switch edit {
+        case .firstConfirmed:
+            daysInfo = daysInfo?.filter{$0.confirmed! > 0}
+        case .firstDead:
+            daysInfo = daysInfo?.filter{$0.deaths! > 0}
+        case .firstRecovered:
+            daysInfo = daysInfo?.filter{$0.recovered! > 0}
+        }
+        view?.showUpdateChart()
+    }
+        
 }

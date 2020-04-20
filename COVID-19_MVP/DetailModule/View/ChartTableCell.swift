@@ -13,9 +13,9 @@ final class DetailChartCell: UITableViewCell {
     
     public var dataForChart : [DayInfo]? {
         didSet {
-            guard var unwrappedData = dataForChart else { return }
-            unwrappedData = unwrappedData.filter{$0.confirmed! > 0}.reversed()
-            drawChart(unwrappedData: unwrappedData)
+            guard let unwrappedData = dataForChart else { return }
+            //unwrappedData = unwrappedData.filter{$0.confirmed! > 0}.reversed()
+            drawChart(unwrappedData: unwrappedData.reversed())
         }
     }
     

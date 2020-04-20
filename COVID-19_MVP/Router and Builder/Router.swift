@@ -19,7 +19,7 @@ protocol MainRouter : RouterProtocol {
 }
 
 final class Router : MainRouter {
-    
+        
     var navigationController : UINavigationController?
     var assemblyBuilder      : AssemblyBuilder?
     
@@ -46,5 +46,4 @@ final class Router : MainRouter {
         
         navigationController.pushViewController(detailVC, animated: true)
     }
-    
 }
