@@ -30,7 +30,6 @@ final class MainViewController : UIViewController {
         setupSearchControl()
         setupTableView()
         setConstraints()
-
     }
     
     private func setupView () {

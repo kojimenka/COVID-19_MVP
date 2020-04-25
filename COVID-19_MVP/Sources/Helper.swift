@@ -9,6 +9,26 @@
 import Foundation
 import UIKit
 
+final class Helper {
+    public static func createLocalPush (country : String, confirmedCases : Int) {
+        let centre = UNUserNotificationCenter.current()
+        let content = UNMutableNotificationContent()
+        
+        content.title = "COVID-19"
+        content.body = "Today in \(country) \(confirmedCases) confirmed cases"
+        content.sound = .default
+        content.threadIdentifier = "local-notifications temp"
+        
+        let date = Date(timeIntervalSinceNow: 10)
+        let dateComponent = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponent, repeats: false)
+        let requst = UNNotificationRequest(identifier: "content", content: content, trigger: trigger)
+        
+        centre.add(requst) { (_) in
+        }
+    }
+}
+
 extension Date {
     static func currentDay () -> Int {
         let dateFormatter = DateFormatter()
